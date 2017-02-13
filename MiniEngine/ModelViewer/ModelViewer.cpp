@@ -229,7 +229,7 @@ void ModelViewer::Startup( void )
 
 	MotionBlur::Enable = true;
 	TemporalAA::Enable = true;
-	FXAA::Enable = false;
+	FXAA::Enable = true;
 	PostEffects::EnableHDR = true;
 	PostEffects::EnableAdaptation = true;
 	SSAO::Enable = true;

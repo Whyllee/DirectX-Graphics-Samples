@@ -53,7 +53,10 @@ namespace Math
 
 		BaseCamera() : m_CameraToWorld(kIdentity), m_Basis(kIdentity) {}
 
-		void SetProjMatrix( const Matrix4& ProjMat ) { m_ProjMatrix = ProjMat; }
+		void SetProjMatrix(const Matrix4& ProjMat) { m_ProjMatrix = ProjMat; }
+		void SaveViewProjMatrix() { m_PreviousViewProjMatrix = m_ViewProjMatrix; }
+
+	private:
 
 		OrthogonalTransform m_CameraToWorld;
 
@@ -131,6 +134,12 @@ namespace Math
 		SetPosition(xform.GetTranslation());
 	}
 
+	inline void BaseCamera::SetTransform(const OrthogonalTransform& xform)
+	{
+		m_CameraToWorld = xform;
+		m_Basis = Matrix3(m_CameraToWorld.GetRotation());
+	}
+
 	inline void BaseCamera::SetRotation( Quaternion basisRotation )
 	{
 		m_CameraToWorld.SetRotation(Normalize(basisRotation));
@@ -151,7 +160,7 @@ namespace Math
 
 		UpdateProjMatrix();
 
-		m_PreviousViewProjMatrix = m_ViewProjMatrix;
+		SaveViewProjMatrix();
 	}
 
 } // namespace Math
